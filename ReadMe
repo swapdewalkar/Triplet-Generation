@@ -1,0 +1,44 @@
+1.  PreProcessing:
+    1.a (vir) python process_main.py [INPUT File in Data Folder]  [SPECIFY OUTPUT FOLDER (autocreate in Results/)] [PARAMETERS]
+    - e.g. python process_main.py reviews_small.txt reviews_small_output_test PDTOWC
+
+2. Create Datasets: (openke)
+    2.a  python make_dataset.py  [ INPUT FOLDER PATH ] [INPUT FOLDER] 
+        - Output Folder will be created in OpenKE/Dataset depending on input Folder
+        - Two Folder will be create: With and Without Co-occurence
+        - e.g. python make_dataset.py  ~/code/Final\ Code/Result Reviews_NEW_OUTPUT_11
+        - e.g. python make_dataset.py ~/code/Final\ Code/Result Reviews_V10K
+
+    2.b python analysis.py Dataset/[FOLDER] 
+        - Count  Relation-wise, Head-wise and Tail-wise.
+        - create file analysis.txt for Results
+        - e.g. python analysis.py Dataset/Reviews_V10K_WN_DP > Dataset/Reviews_V10K_WN_DP/analysis.txt
+
+    2.c python graph_analysis.py Dataset/[FOLDER]
+        - Relation and Entity  Sorted by Vocab, Count and ID and Find unique count.
+        - entity/relation/train_stats.txt will be created
+        - e.g.python graph_analysis.py Dataset/Reviews_V10K_WN_DP
+
+    2.d python remove_duplicate.py Dataset/[FOLDER]
+        - Create Duplicated and Unique limited relation.
+        - Created folder Dataset/[FOLDER]_Unique
+        - After this you can run analysis.py and graph_analysis.py for more info    
+        - e.g. python remove_duplicate.py Dataset/Reviews_V10K_WN_DP
+
+    2.e Useful DP
+        - python remove_dp_relations.py [Folder]
+        - remove_dp_relations.py ===>>>  useful relation.
+
+
+3. Training: (openke)
+    3.a python train.py  python train.py [INPUT FOLDER in Dataset] [OUTPUT FOLDER in res] [loss_file_modifier]
+        - python train.py Reviews_NEW_OUTPUT_11_WN_DP Reviews_OUT_Adadelta_E1000_L1_D150_B32 0
+
+4. Evaluation: 
+    4.c (openke) python convert_vector.py [Dataset] [FOLDER]
+        - python convert_vector.py Reviews_All_Rels Reviews_Adadelta_E5000_B32_D150_L1
+        - create embedding vector for processing
+
+    4.b (vir) python evaluate.py [path to embedding vector] [output_modifier]
+        - Evaluate learnt embedding based on various Evaluation.
+        - create file OUT_out_modifier
